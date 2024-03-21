@@ -1,8 +1,9 @@
 ---
-title: ¿Qué es la espectroscopia de emisión óptica mediante LIBS?
-author: Alfredo Sánchez Alberca
+title: ¿Qué es la espectroscopia de emisión óptica mediante LIBS? 
+author: Alfredo Sánchez Alberca (GIFOA)
 email: asalber@ceu.es
 date: 2025/02/19
+affiliation: Grupo de Investigación en Física y Óptica Aplicadas (GIFOA), Universidad CEU San Pablo
 theme: 
     light: flatly
     dark: darkly
@@ -27,4 +28,29 @@ El espectro óptico se puede dividir en tres regiones principales: ultravioleta 
 
 ![Espectro óptico obtenido mediante LIBS de una muestra de poliestireno](img/espectro-libs-poliestireno.png)
 
+## Espectros de los elementos químicos
+
+La base de datos de los espectros de emisión mediante LIBS de los elementos químicos es muy extensa y se puede consultar en [NIST Atomic Spectra Database](https://www.nist.gov/pml/atomic-spectra-database). 
+
+A continuación se muestran algunos ejemplos de espectros de emisión de algunos elementos químicos.
+
+### Hidrógeno
+
+![Espectro de emisión de hidrógeno en aire](img/espectro-hidrogeno.png)
+
+### Oxígeno
+
+![Espectro de emisión de oxígeno en aire](img/espectro-oxigeno.png)
+
+### Nitrógeno
+
+![Espectro de emisión de nitrógeno en aire](img/espectro-nitrogeno.png)
+
+### Carbono
+
+![Espectro de emisión de carbono en aire](img/espectro-carbono.png)
+
+### Hierro
+
+![Espectro de emisión de hierro en aire](img/espectro-hierro.png)
 

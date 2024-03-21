@@ -1,8 +1,9 @@
 ---
 title: Espectroscopía mediante LIBS 
-author: Alfredo Sánchez Alberca
+author: Alfredo Sánchez Alberca (GIFOA)
 email: asalber@ceu.es
 date: 2025/02/19
+affiliation: Grupo de Investigación en Física y Óptica Aplicadas (GIFOA), Universidad CEU San Pablo
 theme: 
     light: flatly
     dark: darkly
