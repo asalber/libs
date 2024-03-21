@@ -1,0 +1,14 @@
+---
+title: Paquetes de R para espectroscopia
+author: Alfredo Sánchez Alberca
+email: asalber@ceu.es
+date: 2025/02/19
+theme: 
+    light: flatly
+    dark: darkly
+lang: es
+---
+
+## Paquete `hyperSpec`
+
+El paquete `hyperSpec` es un paquete de R que proporciona herramientas para la manipulación y análisis de datos espectroscópicos. Este paquete permite trabajar con datos espectroscópicos de forma sencilla y eficiente, y proporciona herramientas para visualizar y analizar espectros ópticos.

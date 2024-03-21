@@ -1,0 +1,13 @@
+---
+title: Espectroscopía mediante LIBS 
+author: Alfredo Sánchez Alberca
+email: asalber@ceu.es
+date: 2025/02/19
+theme: 
+    light: flatly
+    dark: darkly
+lang: es
+---
+
+1. [¿Qué es la espectroscopia mediatne LIBS?](espectroscopia-libs.html)
+1. [Paquetes de R para la espectroscopia.](espectroscopia-r.html)
