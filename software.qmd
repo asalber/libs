@@ -1,0 +1,54 @@
+---
+title: Software para el análisis de datos espectroscópicos 
+#author: Alfredo Sánchez Alberca (GIFOA)
+#email: asalber@ceu.es
+#date: 2025/02/19
+affiliation: Grupo de Investigación en Física y Óptica Aplicadas (GIFOA), Universidad CEU San Pablo
+theme: 
+    light: flatly
+    dark: darkly
+lang: es
+---
+
+## Paquetes de R
+
+### Paquete `hyperSpec`
+
+El paquete [`hyperSpec`](https://cran.r-project.org/web/packages/hyperSpec/index.html) es un paquete de R que proporciona herramientas para la manipulación y análisis de datos espectroscópicos. Este paquete permite trabajar con datos espectroscópicos de forma sencilla y eficiente, y proporciona herramientas para visualizar y analizar espectros ópticos.
+
+- [Introducción a hyperSpec]([hyperSpec/intro.html](https://r-hyperspec.github.io/hyperSpec/articles/hyperSpec.html#fig:loess-kl))
+
+### Paquete `resemble`
+
+El paquete [`resemble`](https://cran.r-project.org/web/packages/resemble/index.html) proporciona herramientas para extraer de manera eficiente y precisa información cuantitativa significativa de bases de datos espectrales grandes y complejas. Las funcionalidades principales del paquete incluyen: reducción de dimensionalidad, cálculo de medidas de disimilitud, evaluación de matrices de disimilitud, búsqueda de espectros similares, ajuste y predicción de modelos espectroscópicos locales.
+
+- [Introducción a resemble](https://cran.r-project.org/web/packages/resemble/vignettes/resemble.html)
+
+### Paquete `prospectr`
+
+El paquete [`prospectr`](https://cran.r-project.org/web/packages/prospectr/index.html) es un paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Este paquete está especializado en el preprocesamiento de datos espectroscópicos y proporciona herramientas para la corrección de ruido, la normalización de datos y el calibrado de la muestra.
+
+- [Introducción a prospectr](https://cran.r-project.org/web/packages/prospectr/vignettes/prospectr.html)
+
+### Paquete `Spectral Analysis`
+
+El paquete [`Spectral Analysis`](https://cran.r-project.org/web/packages/SpectralAnalysis/index.html) es otro paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Permite realizar las tareas más comunes en el análisis de espectros, como la corrección de ruido, la normalización de datos y la identificación de picos.
+
+- [Introducción a Spectral Analysis](https://cran.r-project.org/web/packages/spectralAnalysis/vignettes/spectralAnalysis.html)
+
+## Paquetes de Python
+
+### Paquete `SimulatedLIBS`
+
+El paquete `SimulatedLIBS` es un paquete de Python que permite simular espectros de emisión de un plasma inducido por láser (LIBS) a partir de la composición química de una muestra.
+
+- [Documentación](https://github.com/MKastek/SimulatedLIBS?tab=readme-ov-file)
+
+## Paquetes de Julia
+
+### Paquete `Spectra`
+
+El paquete `Spectra` es un paquete de Julia para el análisis de datos espectroscópicos que permite realizar las tareas más comunes en el análisis de espectros de absorción y emisión, como ajuste de la línea base, ajuste de picos, integración de picos, cálculo de áreas, etc.
+
+- [Documentación](https://github.com/charlesll/Spectra.jl)
+  

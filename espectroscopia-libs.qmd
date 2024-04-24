@@ -1,13 +1,12 @@
 ---
 title: ¿Qué es la espectroscopia de emisión óptica mediante LIBS? 
-author: Alfredo Sánchez Alberca (GIFOA)
-email: asalber@ceu.es
-date: 2025/02/19
 affiliation: Grupo de Investigación en Física y Óptica Aplicadas (GIFOA), Universidad CEU San Pablo
 theme: 
     light: flatly
     dark: darkly
 lang: es
+nocite: |
+  @*
 ---
 
 ## espectroscopia de emisión óptica
@@ -17,6 +16,7 @@ La espectroscopia de emisión óptica (OES, por sus siglas en inglés) es una t�
 Cuando los átomos o iones de una muestra se excitan (por ejemplo mediante un láser como se hace en la técnica [LIBS](https://en.wikipedia.org/wiki/Laser-induced_breakdown_spectroscopy)), los electrones se mueven a niveles de energía más altos. Al regresar a niveles de energía más bajos, liberan energía en forma de luz. La longitud de onda (color) de esta luz es específica para cada elemento, actuando como una "huella digital" única que permite identificar los elementos presentes en la muestra. La intensidad de la luz emitida en estas longitudes de onda específicas se relaciona con la concentración del elemento en la muestra.
 
 ![Equipo de espectroscopia de emisión inducida mediante LIBS](img/instalacion-libs.png)
+
 
 ## Espectro óptico
 
@@ -30,7 +30,7 @@ El espectro óptico se puede dividir en tres regiones principales: ultravioleta 
 
 ## Espectros de los elementos químicos
 
-La base de datos de los espectros de emisión mediante LIBS de los elementos químicos es muy extensa y se puede consultar en [NIST Atomic Spectra Database](https://www.nist.gov/pml/atomic-spectra-database). 
+La base de datos de los espectros de emisión mediante LIBS de los elementos químicos es muy extensa y se puede consultar en [NIST Atomic Spectra Database](https://www.nist.gov/pml/atomic-spectra-database).
 
 A continuación se muestran algunos ejemplos de espectros de emisión de algunos elementos químicos.
 
@@ -53,4 +53,6 @@ A continuación se muestran algunos ejemplos de espectros de emisión de algunos
 ### Hierro
 
 ![Espectro de emisión de hierro en aire](img/espectro-hierro.png)
+
+## Bibliografía
 

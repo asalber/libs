@@ -10,5 +10,5 @@ theme:
 lang: es
 ---
 
-1. [¿Qué es la espectroscopia mediatne LIBS?](espectroscopia-libs.html)
-1. [Paquetes de R para la espectroscopia.](espectroscopia-r.html)
+1. [Introducción a LIBS](espectroscopia-libs.html)
+1. [Sofware para el análisis de datos espectroscópicos](software.html)

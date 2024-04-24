@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "software.html",
+    "href": "software.html",
+    "title": "Software para el análisis de datos espectroscópicos",
+    "section": "",
+    "text": "El paquete hyperSpec es un paquete de R que proporciona herramientas para la manipulación y análisis de datos espectroscópicos. Este paquete permite trabajar con datos espectroscópicos de forma sencilla y eficiente, y proporciona herramientas para visualizar y analizar espectros ópticos.\n\nIntroducción a hyperSpec\n\n\n\n\nEl paquete resemble proporciona herramientas para extraer de manera eficiente y precisa información cuantitativa significativa de bases de datos espectrales grandes y complejas. Las funcionalidades principales del paquete incluyen: reducción de dimensionalidad, cálculo de medidas de disimilitud, evaluación de matrices de disimilitud, búsqueda de espectros similares, ajuste y predicción de modelos espectroscópicos locales.\n\nIntroducción a resemble\n\n\n\n\nEl paquete prospectr es un paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Este paquete está especializado en el preprocesamiento de datos espectroscópicos y proporciona herramientas para la corrección de ruido, la normalización de datos y el calibrado de la muestra.\n\nIntroducción a prospectr\n\n\n\n\nEl paquete Spectral Analysis es otro paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Permite realizar las tareas más comunes en el análisis de espectros, como la corrección de ruido, la normalización de datos y la identificación de picos.\n\nIntroducción a Spectral Analysis"
+  },
+  {
+    "objectID": "software.html#paquetes-de-r",
+    "href": "software.html#paquetes-de-r",
+    "title": "Software para el análisis de datos espectroscópicos",
+    "section": "",
+    "text": "El paquete hyperSpec es un paquete de R que proporciona herramientas para la manipulación y análisis de datos espectroscópicos. Este paquete permite trabajar con datos espectroscópicos de forma sencilla y eficiente, y proporciona herramientas para visualizar y analizar espectros ópticos.\n\nIntroducción a hyperSpec\n\n\n\n\nEl paquete resemble proporciona herramientas para extraer de manera eficiente y precisa información cuantitativa significativa de bases de datos espectrales grandes y complejas. Las funcionalidades principales del paquete incluyen: reducción de dimensionalidad, cálculo de medidas de disimilitud, evaluación de matrices de disimilitud, búsqueda de espectros similares, ajuste y predicción de modelos espectroscópicos locales.\n\nIntroducción a resemble\n\n\n\n\nEl paquete prospectr es un paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Este paquete está especializado en el preprocesamiento de datos espectroscópicos y proporciona herramientas para la corrección de ruido, la normalización de datos y el calibrado de la muestra.\n\nIntroducción a prospectr\n\n\n\n\nEl paquete Spectral Analysis es otro paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Permite realizar las tareas más comunes en el análisis de espectros, como la corrección de ruido, la normalización de datos y la identificación de picos.\n\nIntroducción a Spectral Analysis"
+  },
+  {
+    "objectID": "software.html#paquetes-de-python",
+    "href": "software.html#paquetes-de-python",
+    "title": "Software para el análisis de datos espectroscópicos",
+    "section": "Paquetes de Python",
+    "text": "Paquetes de Python\n\nPaquete SimulatedLIBS\nEl paquete SimulatedLIBS es un paquete de Python que permite simular espectros de emisión de un plasma inducido por láser (LIBS) a partir de la composición química de una muestra.\n\nDocumentación"
+  },
+  {
+    "objectID": "software.html#paquetes-de-julia",
+    "href": "software.html#paquetes-de-julia",
+    "title": "Software para el análisis de datos espectroscópicos",
+    "section": "Paquetes de Julia",
+    "text": "Paquetes de Julia\n\nPaquete Spectra\nEl paquete Spectra es un paquete de Julia para el análisis de datos espectroscópicos que permite realizar las tareas más comunes en el análisis de espectros de absorción y emisión, como ajuste de la línea base, ajuste de picos, integración de picos, cálculo de áreas, etc.\n\nDocumentación"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Espectroscopía mediante LIBS",
+    "section": "",
+    "text": "Introducción a LIBS\nSofware para el análisis de datos espectroscópicos"
+  },
+  {
+    "objectID": "espectroscopia-libs.html",
+    "href": "espectroscopia-libs.html",
+    "title": "¿Qué es la espectroscopia de emisión óptica mediante LIBS?",
+    "section": "",
+    "text": "La espectroscopia de emisión óptica (OES, por sus siglas en inglés) es una técnica analítica utilizada para determinar la composición elemental de una muestra analizando la luz emitida por sus átomos o iones cuando se encuentran en un estado excitado. Esta técnica se basa en el principio de que cada elemento químico emite luz (radiación electromagnética) a longitudes de onda características cuando es excitado a altas energías, permitiendo su identificación y cuantificación.\nCuando los átomos o iones de una muestra se excitan (por ejemplo mediante un láser como se hace en la técnica LIBS), los electrones se mueven a niveles de energía más altos. Al regresar a niveles de energía más bajos, liberan energía en forma de luz. La longitud de onda (color) de esta luz es específica para cada elemento, actuando como una “huella digital” única que permite identificar los elementos presentes en la muestra. La intensidad de la luz emitida en estas longitudes de onda específicas se relaciona con la concentración del elemento en la muestra.\n\n\n\nEquipo de espectroscopia de emisión inducida mediante LIBS"
+  },
+  {
+    "objectID": "espectroscopia-libs.html#espectroscopia-de-emisión-óptica",
+    "href": "espectroscopia-libs.html#espectroscopia-de-emisión-óptica",
+    "title": "¿Qué es la espectroscopia de emisión óptica mediante LIBS?",
+    "section": "",
+    "text": "La espectroscopia de emisión óptica (OES, por sus siglas en inglés) es una técnica analítica utilizada para determinar la composición elemental de una muestra analizando la luz emitida por sus átomos o iones cuando se encuentran en un estado excitado. Esta técnica se basa en el principio de que cada elemento químico emite luz (radiación electromagnética) a longitudes de onda características cuando es excitado a altas energías, permitiendo su identificación y cuantificación.\nCuando los átomos o iones de una muestra se excitan (por ejemplo mediante un láser como se hace en la técnica LIBS), los electrones se mueven a niveles de energía más altos. Al regresar a niveles de energía más bajos, liberan energía en forma de luz. La longitud de onda (color) de esta luz es específica para cada elemento, actuando como una “huella digital” única que permite identificar los elementos presentes en la muestra. La intensidad de la luz emitida en estas longitudes de onda específicas se relaciona con la concentración del elemento en la muestra.\n\n\n\nEquipo de espectroscopia de emisión inducida mediante LIBS"
+  },
+  {
+    "objectID": "espectroscopia-libs.html#espectro-óptico",
+    "href": "espectroscopia-libs.html#espectro-óptico",
+    "title": "¿Qué es la espectroscopia de emisión óptica mediante LIBS?",
+    "section": "Espectro óptico",
+    "text": "Espectro óptico\nUn espectro óptico es una representación visual de la distribución de la luz con respecto a su longitud de onda o frecuencia. Habitualmente se representa el rango de luz visible e inmediatamente adyacente (ultravioleta cercano e infrarrojo cercano) que puede ser observado o medido cuando la luz se descompone por su longitud de onda.\nUn espectro óptico se representa sobre unos ejes cartesianos, donde el eje \\(x\\) representa la longitud de onda y el eje \\(y\\) la de intensidad de luz.\nEl espectro óptico se puede dividir en tres regiones principales: ultravioleta (UV), visible (VIS) e infrarrojo (IR). La luz ultravioleta tiene longitudes de onda más cortas que la luz visible, mientras que la luz infrarroja tiene longitudes de onda más largas. La luz visible se encuentra en el rango de longitudes de onda de 400 a 700 nm.\n\n\n\nEspectro óptico obtenido mediante LIBS de una muestra de poliestireno"
+  },
+  {
+    "objectID": "espectroscopia-libs.html#espectros-de-los-elementos-químicos",
+    "href": "espectroscopia-libs.html#espectros-de-los-elementos-químicos",
+    "title": "¿Qué es la espectroscopia de emisión óptica mediante LIBS?",
+    "section": "Espectros de los elementos químicos",
+    "text": "Espectros de los elementos químicos\nLa base de datos de los espectros de emisión mediante LIBS de los elementos químicos es muy extensa y se puede consultar en NIST Atomic Spectra Database.\nA continuación se muestran algunos ejemplos de espectros de emisión de algunos elementos químicos.\n\nHidrógeno\n\n\n\nEspectro de emisión de hidrógeno en aire\n\n\n\n\nOxígeno\n\n\n\nEspectro de emisión de oxígeno en aire\n\n\n\n\nNitrógeno\n\n\n\nEspectro de emisión de nitrógeno en aire\n\n\n\n\nCarbono\n\n\n\nEspectro de emisión de carbono en aire\n\n\n\n\nHierro\n\n\n\nEspectro de emisión de hierro en aire"
+  }
+]
