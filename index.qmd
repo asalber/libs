@@ -1,14 +1,12 @@
 ---
 title: Espectroscopía mediante LIBS 
-author: Alfredo Sánchez Alberca (GIFOA)
-email: asalber@ceu.es
-date: 2025/02/19
+author: Grupo de Investigación de Física y Óptica Aplicada (GIFOA)
+#email: asalber@ceu.es
+date: today
 affiliation: Grupo de Investigación en Física y Óptica Aplicadas (GIFOA), Universidad CEU San Pablo
-theme: 
-    light: flatly
-    dark: darkly
 lang: es
 ---
 
-1. [Introducción a LIBS](espectroscopia-libs.html)
-1. [Sofware para el análisis de datos espectroscópicos](software.html)
+1. [Introducción a LIBS](espectroscopia-libs.qmd)
+2. [Sofware para el análisis de datos espectroscópicos](software.qmd)
+3. [Simulación de espectros LIBS](simulacion-espectros.qmd)

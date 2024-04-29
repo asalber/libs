@@ -4,9 +4,6 @@ title: Software para el análisis de datos espectroscópicos
 #email: asalber@ceu.es
 #date: 2025/02/19
 affiliation: Grupo de Investigación en Física y Óptica Aplicadas (GIFOA), Universidad CEU San Pablo
-theme: 
-    light: flatly
-    dark: darkly
 lang: es
 ---
 
@@ -16,7 +13,7 @@ lang: es
 
 El paquete [`hyperSpec`](https://cran.r-project.org/web/packages/hyperSpec/index.html) es un paquete de R que proporciona herramientas para la manipulación y análisis de datos espectroscópicos. Este paquete permite trabajar con datos espectroscópicos de forma sencilla y eficiente, y proporciona herramientas para visualizar y analizar espectros ópticos.
 
-- [Introducción a hyperSpec]([hyperSpec/intro.html](https://r-hyperspec.github.io/hyperSpec/articles/hyperSpec.html#fig:loess-kl))
+- [Introducción a hyperSpec](https://r-hyperspec.github.io/hyperSpec/articles/hyperSpec.html)
 
 ### Paquete `resemble`
 

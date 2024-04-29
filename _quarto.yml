@@ -21,6 +21,8 @@ website:
         text: Introducción a LIBS
       - href: software.qmd
         text: Software
+      - href: simulacion-espectros.qmd
+        text: Simulación de espectros
 
 bibliography: bibliografia.bib
 

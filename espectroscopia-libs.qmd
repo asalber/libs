@@ -1,9 +1,6 @@
 ---
 title: ¿Qué es la espectroscopia de emisión óptica mediante LIBS? 
 affiliation: Grupo de Investigación en Física y Óptica Aplicadas (GIFOA), Universidad CEU San Pablo
-theme: 
-    light: flatly
-    dark: darkly
 lang: es
 nocite: |
   @*

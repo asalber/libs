@@ -1,0 +1,52 @@
+---
+title: Simulación de espectros LIBS con el paquete SimulatedLIBS
+lang: es
+---
+
+El paquete `SimulatedLIBS` permite simular espectros LIBS de manera sencilla mediante la función `simulation.SimulatedLIBS` que tiene los siguientes parámetros:
+
+- `Te`: Temperatura electrónica de la muestra en eV.
+- `Ne`: Densidad electrónica de la muestra en cm$^{-3}$.
+- `elements`: Lista con los elementos presentes en la muestra.
+- `percentages`: Lista con los porcentajes de cada elemento en la muestra.
+- `resolution`: Resolución del espectro en nm.
+- `low_w`: Longitud de onda mínima en nm.
+- `upper_w`: Longitud de onda máxima en nm.
+- `max_ion_charge`: Máximo estado de ionización a considerar.
+- `webscraping`: Método de web scraping a utilizar. Puede ser "static" o "dynamic".
+
+En este ejemplo, se simula un espectro LIBS para una muestra compuesta por tungsteno (W), hierro (Fe) y molibdeno (Mo). La muestra tiene una temperatura electrónica de 1 eV y una densidad electrónica de $10^{17}$ cm$^{-3}$. La muestra está compuesta por un 50% de tungsteno, un 25% de hierro y un 25% de molibdeno. El espectro se simula en el rango de longitudes de onda de 200 a 1000 nm con una resolución de 1000 puntos. Se calculan los espectros de emisión de los elementos hasta el estado de ionización 3. Se utilizan dos métodos de web scraping para obtener los datos de la base de datos del NIST: uno estático y otro dinámico.
+
+Con web scraping estático:
+```{python}
+import matplotlib.pyplot as plt
+
+from SimulatedLIBS import simulation
+
+libs = simulation.SimulatedLIBS(
+    Te=1.0,
+    Ne=10**17,
+    elements=["W", "Fe", "Mo"],
+    percentages=[50, 25, 25],
+    resolution=1000,
+    low_w=200,
+    upper_w=1000,
+    max_ion_charge=3,
+    webscraping="static",
+)
+
+libs.plot(color="blue", title="W Fe Mo composition")
+#plt.savefig("img/plot_static.png")
+```
+
+A continuación, se guardan los datos del espectro en un archivo CSV.
+
+```{python}
+libs.save_to_csv("datos/spectrum.csv")
+```
+
+También podemos obtener el espectro de la base de datos del NIST.
+
+```{python}
+libs.get_raw_spectrum()
+```
