@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.556">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -190,7 +190,13 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#generación-de-espectros-libs" id="toc-generación-de-espectros-libs" class="nav-link active" data-scroll-target="#generación-de-espectros-libs">Generación de espectros LIBS</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -228,7 +234,7 @@ window.Quarto = {
 </ul>
 <p>En este ejemplo, se simula un espectro LIBS para una muestra compuesta por tungsteno (W), hierro (Fe) y molibdeno (Mo). La muestra tiene una temperatura electrónica de 1 eV y una densidad electrónica de <span class="math inline">\(10^{17}\)</span> cm<span class="math inline">\(^{-3}\)</span>. La muestra está compuesta por un 50% de tungsteno, un 25% de hierro y un 25% de molibdeno. El espectro se simula en el rango de longitudes de onda de 200 a 1000 nm con una resolución de 1000 puntos. Se calculan los espectros de emisión de los elementos hasta el estado de ionización 3. Se utilizan dos métodos de web scraping para obtener los datos de la base de datos del NIST: uno estático y otro dinámico.</p>
 <p>Con web scraping estático:</p>
-<div id="e4753f9d" class="cell" data-execution_count="1">
+<div id="e4753f9d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> SimulatedLIBS <span class="im">import</span> simulation</span>
@@ -256,18 +262,17 @@ window.Quarto = {
 </div>
 </div>
 <p>A continuación, se guardan los datos del espectro en un archivo CSV.</p>
-<div id="b6aa81c4" class="cell" data-execution_count="2">
+<div id="b6aa81c4" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>libs.save_to_csv(<span class="st">"datos/spectrum.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>También podemos obtener el espectro de la base de datos del NIST.</p>
-<div id="76cfbb75" class="cell" data-execution_count="3">
+<div id="76cfbb75" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>libs.get_raw_spectrum()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -338,9 +343,53 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</div>
+<section id="generación-de-espectros-libs" class="level2">
+<h2 class="anchored" data-anchor-id="generación-de-espectros-libs">Generación de espectros LIBS</h2>
+<p>El siguiente script permite generar una base de datos de espectros con diferentes concentraciones y combinaciones de elementos (en este caso, K, Ca, Sc, Ti, V, Cr, Mn, Fe, Co, Ni, Cu, Zn).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> simLIBS <span class="im">import</span> SimulatedLIBS</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations, product</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the examples folder if it does not exist</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(<span class="st">"datos/ejemplos"</span>):</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    os.makedirs(<span class="st">"datos/ejemplos"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to generate the spectra</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_spectra(elements, percentages):</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"-"</span>.join([elements[i] <span class="op">+</span> <span class="st">"-"</span> <span class="op">+</span> <span class="bu">str</span>(percentages[i]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(elements))])</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(<span class="st">"datos/ejemplos/"</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">".csv"</span>):</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        libs <span class="op">=</span> SimulatedLIBS(</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        Te <span class="op">=</span> <span class="fl">1.0</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        Ne <span class="op">=</span> <span class="dv">10</span><span class="op">**</span><span class="dv">17</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        elements <span class="op">=</span> elements,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        percentages <span class="op">=</span> percentages,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        resolution <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        low_w <span class="op">=</span> <span class="dv">200</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        upper_w <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        max_ion_charge <span class="op">=</span> <span class="dv">3</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        webscraping <span class="op">=</span> <span class="st">"static"</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        libs.save_to_csv(<span class="st">"datos/ejemplos/"</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">".csv"</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Element lists to include in the spectra</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>elements <span class="op">=</span> [<span class="st">"K"</span>, <span class="st">"Ca"</span>, <span class="st">"Sc"</span>, <span class="st">"Ti"</span>, <span class="st">"V"</span>, <span class="st">"Cr"</span>, <span class="st">"Mn"</span>, <span class="st">"Fe"</span>, <span class="st">"Co"</span>, <span class="st">"Ni"</span>, <span class="st">"Cu"</span>, <span class="st">"Zn"</span>]</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Range of concentrations</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>concentrations <span class="op">=</span> <span class="bu">range</span>(<span class="dv">5</span>, <span class="dv">100</span>, <span class="dv">5</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all the combinations of elements.</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>elements_combinations <span class="op">=</span> combinations(elements, <span class="dv">3</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all the concentrations that sum 100.</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>percentages_combinations <span class="op">=</span> product(concentrations, repeat <span class="op">=</span> <span class="dv">3</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>percentages_combinations <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> percentages_combinations <span class="cf">if</span> <span class="bu">sum</span>(i) <span class="op">==</span> <span class="dv">100</span>]</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the spectra for any combination of elements and concentrations.</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> comb <span class="kw">in</span> elements_combinations:</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> perc <span class="kw">in</span> percentages_combinations:</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        generate_spectra(comb, perc) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

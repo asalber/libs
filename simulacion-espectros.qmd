@@ -50,3 +50,52 @@ También podemos obtener el espectro de la base de datos del NIST.
 ```{python}
 libs.get_raw_spectrum()
 ```
+
+## Generación de espectros LIBS
+
+El siguiente script permite generar una base de datos de espectros con diferentes concentraciones y combinaciones de elementos (en este caso, K, Ca, Sc, Ti, V, Cr, Mn, Fe, Co, Ni, Cu, Zn).
+
+
+```python
+from simLIBS import SimulatedLIBS
+from itertools import combinations, product
+import os
+
+# Create the examples folder if it does not exist
+if not os.path.exists("datos/ejemplos"):
+    os.makedirs("datos/ejemplos")
+
+# Function to generate the spectra
+def generate_spectra(elements, percentages):
+    name = "-".join([elements[i] + "-" + str(percentages[i]) for i in range(len(elements))])
+    if not os.path.exists("datos/ejemplos/" + name + ".csv"):
+        libs = SimulatedLIBS(
+        Te = 1.0,
+        Ne = 10**17,
+        elements = elements,
+        percentages = percentages,
+        resolution = 1000,
+        low_w = 200,
+        upper_w = 1000,
+        max_ion_charge = 3,
+        webscraping = "static",
+        )
+        libs.save_to_csv("datos/ejemplos/" + name + ".csv")
+    return
+
+# Element lists to include in the spectra
+elements = ["K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn"]
+# Range of concentrations
+concentrations = range(5, 100, 5)
+
+# Get all the combinations of elements.
+elements_combinations = combinations(elements, 3)
+# Get all the concentrations that sum 100.
+percentages_combinations = product(concentrations, repeat = 3)
+percentages_combinations = [i for i in percentages_combinations if sum(i) == 100]
+
+# Generate the spectra for any combination of elements and concentrations.
+for comb in elements_combinations:
+    for perc in percentages_combinations:
+        generate_spectra(comb, perc) 
+```

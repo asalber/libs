@@ -1,38 +1,17 @@
 [
   {
-    "objectID": "software.html",
-    "href": "software.html",
-    "title": "Software para el análisis de datos espectroscópicos",
+    "objectID": "simulacion-espectros.html",
+    "href": "simulacion-espectros.html",
+    "title": "Simulación de espectros LIBS con el paquete SimulatedLIBS",
     "section": "",
-    "text": "El paquete hyperSpec es un paquete de R que proporciona herramientas para la manipulación y análisis de datos espectroscópicos. Este paquete permite trabajar con datos espectroscópicos de forma sencilla y eficiente, y proporciona herramientas para visualizar y analizar espectros ópticos.\n\nIntroducción a hyperSpec\n\n\n\n\nEl paquete resemble proporciona herramientas para extraer de manera eficiente y precisa información cuantitativa significativa de bases de datos espectrales grandes y complejas. Las funcionalidades principales del paquete incluyen: reducción de dimensionalidad, cálculo de medidas de disimilitud, evaluación de matrices de disimilitud, búsqueda de espectros similares, ajuste y predicción de modelos espectroscópicos locales.\n\nIntroducción a resemble\n\n\n\n\nEl paquete prospectr es un paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Este paquete está especializado en el preprocesamiento de datos espectroscópicos y proporciona herramientas para la corrección de ruido, la normalización de datos y el calibrado de la muestra.\n\nIntroducción a prospectr\n\n\n\n\nEl paquete Spectral Analysis es otro paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Permite realizar las tareas más comunes en el análisis de espectros, como la corrección de ruido, la normalización de datos y la identificación de picos.\n\nIntroducción a Spectral Analysis"
+    "text": "El paquete SimulatedLIBS permite simular espectros LIBS de manera sencilla mediante la función simulation.SimulatedLIBS que tiene los siguientes parámetros:\nEn este ejemplo, se simula un espectro LIBS para una muestra compuesta por tungsteno (W), hierro (Fe) y molibdeno (Mo). La muestra tiene una temperatura electrónica de 1 eV y una densidad electrónica de \\(10^{17}\\) cm\\(^{-3}\\). La muestra está compuesta por un 50% de tungsteno, un 25% de hierro y un 25% de molibdeno. El espectro se simula en el rango de longitudes de onda de 200 a 1000 nm con una resolución de 1000 puntos. Se calculan los espectros de emisión de los elementos hasta el estado de ionización 3. Se utilizan dos métodos de web scraping para obtener los datos de la base de datos del NIST: uno estático y otro dinámico.\nCon web scraping estático:\nimport matplotlib.pyplot as plt\n\nfrom SimulatedLIBS import simulation\n\nlibs = simulation.SimulatedLIBS(\n    Te=1.0,\n    Ne=10**17,\n    elements=[\"W\", \"Fe\", \"Mo\"],\n    percentages=[50, 25, 25],\n    resolution=1000,\n    low_w=200,\n    upper_w=1000,\n    max_ion_charge=3,\n    webscraping=\"static\",\n)\n\nlibs.plot(color=\"blue\", title=\"W Fe Mo composition\")\n#plt.savefig(\"img/plot_static.png\")\nA continuación, se guardan los datos del espectro en un archivo CSV.\nlibs.save_to_csv(\"datos/spectrum.csv\")\nTambién podemos obtener el espectro de la base de datos del NIST.\nlibs.get_raw_spectrum()\n\n\n\n\n\n\n\n\nwavelength\nintensity\n\n\n\n\n0\n200.0\n1.696e+07\n\n\n1\n200.3\n1.994e+07\n\n\n2\n200.6\n2.221e+07\n\n\n3\n200.9\n2.381e+07\n\n\n4\n201.2\n2.475e+07\n\n\n...\n...\n...\n\n\n2716\n998.8\n2.271e-04\n\n\n2717\n999.1\n1.442e-04\n\n\n2718\n999.4\n9.109e-05\n\n\n2719\n999.7\n5.721e-05\n\n\n2720\n1000.0\n3.574e-05\n\n\n\n\n2721 rows × 2 columns"
   },
   {
-    "objectID": "software.html#paquetes-de-r",
-    "href": "software.html#paquetes-de-r",
-    "title": "Software para el análisis de datos espectroscópicos",
-    "section": "",
-    "text": "El paquete hyperSpec es un paquete de R que proporciona herramientas para la manipulación y análisis de datos espectroscópicos. Este paquete permite trabajar con datos espectroscópicos de forma sencilla y eficiente, y proporciona herramientas para visualizar y analizar espectros ópticos.\n\nIntroducción a hyperSpec\n\n\n\n\nEl paquete resemble proporciona herramientas para extraer de manera eficiente y precisa información cuantitativa significativa de bases de datos espectrales grandes y complejas. Las funcionalidades principales del paquete incluyen: reducción de dimensionalidad, cálculo de medidas de disimilitud, evaluación de matrices de disimilitud, búsqueda de espectros similares, ajuste y predicción de modelos espectroscópicos locales.\n\nIntroducción a resemble\n\n\n\n\nEl paquete prospectr es un paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Este paquete está especializado en el preprocesamiento de datos espectroscópicos y proporciona herramientas para la corrección de ruido, la normalización de datos y el calibrado de la muestra.\n\nIntroducción a prospectr\n\n\n\n\nEl paquete Spectral Analysis es otro paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Permite realizar las tareas más comunes en el análisis de espectros, como la corrección de ruido, la normalización de datos y la identificación de picos.\n\nIntroducción a Spectral Analysis"
-  },
-  {
-    "objectID": "software.html#paquetes-de-python",
-    "href": "software.html#paquetes-de-python",
-    "title": "Software para el análisis de datos espectroscópicos",
-    "section": "Paquetes de Python",
-    "text": "Paquetes de Python\n\nPaquete SimulatedLIBS\nEl paquete SimulatedLIBS es un paquete de Python que permite simular espectros de emisión de un plasma inducido por láser (LIBS) a partir de la composición química de una muestra.\n\nDocumentación"
-  },
-  {
-    "objectID": "software.html#paquetes-de-julia",
-    "href": "software.html#paquetes-de-julia",
-    "title": "Software para el análisis de datos espectroscópicos",
-    "section": "Paquetes de Julia",
-    "text": "Paquetes de Julia\n\nPaquete Spectra\nEl paquete Spectra es un paquete de Julia para el análisis de datos espectroscópicos que permite realizar las tareas más comunes en el análisis de espectros de absorción y emisión, como ajuste de la línea base, ajuste de picos, integración de picos, cálculo de áreas, etc.\n\nDocumentación"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Espectroscopía mediante LIBS",
-    "section": "",
-    "text": "Introducción a LIBS\nSofware para el análisis de datos espectroscópicos\nSimulación de espectros LIBS"
+    "objectID": "simulacion-espectros.html#generación-de-espectros-libs",
+    "href": "simulacion-espectros.html#generación-de-espectros-libs",
+    "title": "Simulación de espectros LIBS con el paquete SimulatedLIBS",
+    "section": "Generación de espectros LIBS",
+    "text": "Generación de espectros LIBS\nEl siguiente script permite generar una base de datos de espectros con diferentes concentraciones y combinaciones de elementos (en este caso, K, Ca, Sc, Ti, V, Cr, Mn, Fe, Co, Ni, Cu, Zn).\nfrom simLIBS import SimulatedLIBS\nfrom itertools import combinations, product\nimport os\n\n# Create the examples folder if it does not exist\nif not os.path.exists(\"datos/ejemplos\"):\n    os.makedirs(\"datos/ejemplos\")\n\n# Function to generate the spectra\ndef generate_spectra(elements, percentages):\n    name = \"-\".join([elements[i] + \"-\" + str(percentages[i]) for i in range(len(elements))])\n    if not os.path.exists(\"datos/ejemplos/\" + name + \".csv\"):\n        libs = SimulatedLIBS(\n        Te = 1.0,\n        Ne = 10**17,\n        elements = elements,\n        percentages = percentages,\n        resolution = 1000,\n        low_w = 200,\n        upper_w = 1000,\n        max_ion_charge = 3,\n        webscraping = \"static\",\n        )\n        libs.save_to_csv(\"datos/ejemplos/\" + name + \".csv\")\n    return\n\n# Element lists to include in the spectra\nelements = [\"K\", \"Ca\", \"Sc\", \"Ti\", \"V\", \"Cr\", \"Mn\", \"Fe\", \"Co\", \"Ni\", \"Cu\", \"Zn\"]\n# Range of concentrations\nconcentrations = range(5, 100, 5)\n\n# Get all the combinations of elements.\nelements_combinations = combinations(elements, 3)\n# Get all the concentrations that sum 100.\npercentages_combinations = product(concentrations, repeat = 3)\npercentages_combinations = [i for i in percentages_combinations if sum(i) == 100]\n\n# Generate the spectra for any combination of elements and concentrations.\nfor comb in elements_combinations:\n    for perc in percentages_combinations:\n        generate_spectra(comb, perc)"
   },
   {
     "objectID": "espectroscopia-libs.html",
@@ -63,10 +42,38 @@
     "text": "Espectros de los elementos químicos\nLa base de datos de los espectros de emisión mediante LIBS de los elementos químicos es muy extensa y se puede consultar en NIST Atomic Spectra Database.\nA continuación se muestran algunos ejemplos de espectros de emisión de algunos elementos químicos.\n\nHidrógeno\n\n\n\nEspectro de emisión de hidrógeno en aire\n\n\n\n\nOxígeno\n\n\n\nEspectro de emisión de oxígeno en aire\n\n\n\n\nNitrógeno\n\n\n\nEspectro de emisión de nitrógeno en aire\n\n\n\n\nCarbono\n\n\n\nEspectro de emisión de carbono en aire\n\n\n\n\nHierro\n\n\n\nEspectro de emisión de hierro en aire"
   },
   {
-    "objectID": "simulacion-espectros.html",
-    "href": "simulacion-espectros.html",
-    "title": "Simulación de espectros LIBS con el paquete SimulatedLIBS",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Espectroscopía mediante LIBS",
     "section": "",
-    "text": "El paquete SimulatedLIBS permite simular espectros LIBS de manera sencilla mediante la función simulation.SimulatedLIBS que tiene los siguientes parámetros:\n\nTe: Temperatura electrónica de la muestra en eV.\nNe: Densidad electrónica de la muestra en cm\\(^{-3}\\).\nelements: Lista con los elementos presentes en la muestra.\npercentages: Lista con los porcentajes de cada elemento en la muestra.\nresolution: Resolución del espectro en nm.\nlow_w: Longitud de onda mínima en nm.\nupper_w: Longitud de onda máxima en nm.\nmax_ion_charge: Máximo estado de ionización a considerar.\nwebscraping: Método de web scraping a utilizar. Puede ser “static” o “dynamic”.\n\nEn este ejemplo, se simula un espectro LIBS para una muestra compuesta por tungsteno (W), hierro (Fe) y molibdeno (Mo). La muestra tiene una temperatura electrónica de 1 eV y una densidad electrónica de \\(10^{17}\\) cm\\(^{-3}\\). La muestra está compuesta por un 50% de tungsteno, un 25% de hierro y un 25% de molibdeno. El espectro se simula en el rango de longitudes de onda de 200 a 1000 nm con una resolución de 1000 puntos. Se calculan los espectros de emisión de los elementos hasta el estado de ionización 3. Se utilizan dos métodos de web scraping para obtener los datos de la base de datos del NIST: uno estático y otro dinámico.\nCon web scraping estático:\n\nimport matplotlib.pyplot as plt\n\nfrom SimulatedLIBS import simulation\n\nlibs = simulation.SimulatedLIBS(\n    Te=1.0,\n    Ne=10**17,\n    elements=[\"W\", \"Fe\", \"Mo\"],\n    percentages=[50, 25, 25],\n    resolution=1000,\n    low_w=200,\n    upper_w=1000,\n    max_ion_charge=3,\n    webscraping=\"static\",\n)\n\nlibs.plot(color=\"blue\", title=\"W Fe Mo composition\")\n#plt.savefig(\"img/plot_static.png\")\n\n\n\n\n\n\n\n\nA continuación, se guardan los datos del espectro en un archivo CSV.\n\nlibs.save_to_csv(\"datos/spectrum.csv\")\n\nTambién podemos obtener el espectro de la base de datos del NIST.\n\nlibs.get_raw_spectrum()\n\n\n\n\n\n\n\n\n\nwavelength\nintensity\n\n\n\n\n0\n200.0\n1.696e+07\n\n\n1\n200.3\n1.994e+07\n\n\n2\n200.6\n2.221e+07\n\n\n3\n200.9\n2.381e+07\n\n\n4\n201.2\n2.475e+07\n\n\n...\n...\n...\n\n\n2716\n998.8\n2.271e-04\n\n\n2717\n999.1\n1.442e-04\n\n\n2718\n999.4\n9.109e-05\n\n\n2719\n999.7\n5.721e-05\n\n\n2720\n1000.0\n3.574e-05\n\n\n\n\n2721 rows × 2 columns"
+    "text": "Introducción a LIBS\nSofware para el análisis de datos espectroscópicos\nSimulación de espectros LIBS"
+  },
+  {
+    "objectID": "software.html",
+    "href": "software.html",
+    "title": "Software para el análisis de datos espectroscópicos",
+    "section": "",
+    "text": "El paquete hyperSpec es un paquete de R que proporciona herramientas para la manipulación y análisis de datos espectroscópicos. Este paquete permite trabajar con datos espectroscópicos de forma sencilla y eficiente, y proporciona herramientas para visualizar y analizar espectros ópticos.\n\nIntroducción a hyperSpec\n\n\n\n\nEl paquete resemble proporciona herramientas para extraer de manera eficiente y precisa información cuantitativa significativa de bases de datos espectrales grandes y complejas. Las funcionalidades principales del paquete incluyen: reducción de dimensionalidad, cálculo de medidas de disimilitud, evaluación de matrices de disimilitud, búsqueda de espectros similares, ajuste y predicción de modelos espectroscópicos locales.\n\nIntroducción a resemble\n\n\n\n\nEl paquete prospectr es un paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Este paquete está especializado en el preprocesamiento de datos espectroscópicos y proporciona herramientas para la corrección de ruido, la normalización de datos y el calibrado de la muestra.\n\nIntroducción a prospectr\n\n\n\n\nEl paquete Spectral Analysis es otro paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Permite realizar las tareas más comunes en el análisis de espectros, como la corrección de ruido, la normalización de datos y la identificación de picos.\n\nIntroducción a Spectral Analysis"
+  },
+  {
+    "objectID": "software.html#paquetes-de-r",
+    "href": "software.html#paquetes-de-r",
+    "title": "Software para el análisis de datos espectroscópicos",
+    "section": "",
+    "text": "El paquete hyperSpec es un paquete de R que proporciona herramientas para la manipulación y análisis de datos espectroscópicos. Este paquete permite trabajar con datos espectroscópicos de forma sencilla y eficiente, y proporciona herramientas para visualizar y analizar espectros ópticos.\n\nIntroducción a hyperSpec\n\n\n\n\nEl paquete resemble proporciona herramientas para extraer de manera eficiente y precisa información cuantitativa significativa de bases de datos espectrales grandes y complejas. Las funcionalidades principales del paquete incluyen: reducción de dimensionalidad, cálculo de medidas de disimilitud, evaluación de matrices de disimilitud, búsqueda de espectros similares, ajuste y predicción de modelos espectroscópicos locales.\n\nIntroducción a resemble\n\n\n\n\nEl paquete prospectr es un paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Este paquete está especializado en el preprocesamiento de datos espectroscópicos y proporciona herramientas para la corrección de ruido, la normalización de datos y el calibrado de la muestra.\n\nIntroducción a prospectr\n\n\n\n\nEl paquete Spectral Analysis es otro paquete de R que proporciona herramientas para el análisis de datos espectroscópicos. Permite realizar las tareas más comunes en el análisis de espectros, como la corrección de ruido, la normalización de datos y la identificación de picos.\n\nIntroducción a Spectral Analysis"
+  },
+  {
+    "objectID": "software.html#paquetes-de-python",
+    "href": "software.html#paquetes-de-python",
+    "title": "Software para el análisis de datos espectroscópicos",
+    "section": "Paquetes de Python",
+    "text": "Paquetes de Python\n\nPaquete SimulatedLIBS\nEl paquete SimulatedLIBS es un paquete de Python que permite simular espectros de emisión de un plasma inducido por láser (LIBS) a partir de la composición química de una muestra.\n\nDocumentación"
+  },
+  {
+    "objectID": "software.html#paquetes-de-julia",
+    "href": "software.html#paquetes-de-julia",
+    "title": "Software para el análisis de datos espectroscópicos",
+    "section": "Paquetes de Julia",
+    "text": "Paquetes de Julia\n\nPaquete Spectra\nEl paquete Spectra es un paquete de Julia para el análisis de datos espectroscópicos que permite realizar las tareas más comunes en el análisis de espectros de absorción y emisión, como ajuste de la línea base, ajuste de picos, integración de picos, cálculo de áreas, etc.\n\nDocumentación"
   }
 ]
