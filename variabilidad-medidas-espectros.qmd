@@ -1,0 +1,477 @@
+---
+title: Variabilidad de medidas espectrales
+author: Alfredo Sánchez Alberca (asalber@ceu.es)
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-float: true
+    code-fold: true
+    code-summary: "Mostrar código"
+    fig-width: 8
+    fig-height: 6
+    fig-cap: true
+    fig-align: center
+    self-contained: true
+    number-sections: true
+    # theme: cosmo
+execute:
+  echo: false
+  warning: false
+  message: false
+  results: hold
+  cache: true
+lang: es
+---
+
+```{r setup}
+color1 <- "#F8766D"
+color2 <- "#00BFC4"
+color3 <- "#7CAE00"
+```
+
+
+```{r carga-librerias}
+library(tidyverse)
+library(knitr)
+library(broom)
+library(moments)
+library(reactable)
+library(plotly)
+```
+
+```{r carga-datos}
+df_ficheros <- read.csv("datos/espectros-variabilidad-01-08-2025/ficheros-medidas.csv")
+# Cargamos cada fichero del directorio en un data frame.
+df <- data.frame()
+for (i in 1:nrow(df_ficheros)) {
+    fichero <- df_ficheros$fichero[i]
+    medidas <- df_ficheros$medidas[i]
+    df_espectro <- read.csv(paste0("datos/espectros-variabilidad-01-08-2025/", fichero, "_7416147SP.csv")) |> 
+        mutate(Medidas = factor(medidas), Id = fichero)
+    df <- bind_rows(df, df_espectro)
+}
+```
+
+## Preprocesamiento de los datos
+
+Pasos de preprocesamiento de los espectros:
+
+1. Restar el valor de la columna `Reference` de la columna `Sample` para calcular una nueva variable `Intensidad` con la intensidad real.
+2. Renombramos la columna `Wave` por `Onda`".
+3. Eliminamos las columnas `Reference` y `Sample` que ya no son necesarias una vez calculada `Intensidad` y también la columna `Dark` que no es relevante para el análisis.
+
+```{r preprocesamiento}
+df <- df |> 
+    mutate(Id = as.factor(Id), 
+        Medidas = factor(Medidas, levels = c(1, 10, 30, 50, 100)), 
+        Intensidad = Sample - Reference) |> 
+    rename(Onda = Wave, Fondo = Reference) |> 
+    select(Id, Medidas, Onda, Intensidad, Fondo)
+```
+
+```{r tabla-datos}
+df |> select(-Fondo) |> 
+    reactable( 
+        columns = list(
+            Id = colDef(filterable = TRUE),
+            Medidas = colDef(filterable = TRUE),
+            Onda = colDef(format = colFormat(digits = 1)),
+            Intensidad = colDef(format = colFormat(digits = 1))
+        ),
+        defaultPageSize = 10,
+        striped = TRUE,
+        highlight = TRUE,
+        compact = TRUE,
+        wrap = FALSE
+)
+```
+
+## Gráficos de los espectros
+
+```{r graficos-espectros}
+g <- df |> filter(Medidas == 1) |> 
+    ggplot(aes(x = Onda, y = Intensidad, color = Id)) +
+    geom_line() +
+    labs(title = "Espectros de 1 medida", x = "Longitud de onda (nm)", y = "Intensidad") +
+    theme_minimal()
+#ggplotly(g)
+g
+
+g <- df |> filter(Medidas == 10) |> 
+    ggplot(aes(x = Onda, y = Intensidad, color = Id)) +
+    geom_line() +
+    labs(title = "Espectros de 10 medidas", x = "Longitud de onda (nm)", y = "Intensidad") +
+    theme_minimal()
+#ggplotly(g)
+g
+
+g <- df |> filter(Medidas == 30) |> 
+    ggplot(aes(x = Onda, y = Intensidad, color = Id)) +
+    geom_line() +
+    labs(title = "Espectros de 30 medidas", x = "Longitud de onda (nm)", y = "Intensidad") +
+    theme_minimal()
+#ggplotly(g)
+g
+
+g <- df |> filter(Medidas == 50) |> 
+    ggplot(aes(x = Onda, y = Intensidad, color = Id)) +
+    geom_line() +
+    labs(title = "Espectros de 50 medidas", x = "Longitud de onda (nm)", y = "Intensidad") +
+    theme_minimal()
+#ggplotly(g)
+g
+
+g <- df |> filter(Medidas == 100) |> 
+    ggplot(aes(x = Onda, y = Intensidad, color = Id)) +
+    geom_line() +
+    labs(title = "Espectros de 100 medidas", x = "Longitud de onda (nm)", y = "Intensidad") +
+    theme_minimal()
+#ggplotly(g)
+g
+```
+
+## Análisis del fondo
+```{r}
+df |> filter(Medidas == 1) |> 
+    ggplot(aes(x = Fondo)) +
+    geom_histogram(bins = 30, fill = color1, color = "white") +
+    labs(title = "Histograma del fondo para 1 medida", x = "Intensidad", y = "Frecuencia absoluta") +
+    theme_minimal()
+```
+
+La distribución es claramente asimétrica hacia la derecha, lo que sugiere que el fondo no sigue una distribución normal.
+
+```{r}
+df_est_fondo <- df |> filter(Medidas == 1) |> 
+    summarise(
+        Media = mean(Fondo, na.rm = TRUE), 
+        Desviación = sd(Fondo, na.rm = TRUE),
+        CoefVariación = Desviación / Media * 100,
+        .groups = "drop")
+
+kable(df_est_fondo, caption = "Estadísticos del fondo para 1 medida")
+```
+
+### Test de normalidad del fondo
+
+Aplicamos el test de Kolmogorov-Smirnov para comprobar si el fondo sigue una distribución normal.
+```{r test-normalidad-fondo}
+df |> filter(Medidas == 1) |> 
+    summarise(
+        p_value = ks.test(Fondo, "pnorm", mean = mean(Fondo, na.rm = TRUE), sd = sd(Fondo, na.rm = TRUE))$p.value
+    ) |> 
+kable(caption = "p-valor del test de Kolmogorov-Smirnov para normalidad del fondo (1 medida)")
+```
+
+El p-valor del test es menor que 0.01, lo que indica claramente que el fondo no sigue una distribución normal.
+
+```{r}
+df |> filter(Medidas == 1) |> 
+    ggplot(aes(sample = Fondo)) +
+    stat_qq() +
+    stat_qq_line(color = color1) +
+    labs(title = "Q-Q plot del fondo para 1 medida", x = "Cuantiles teóricos", y = "Cuantiles muestrales") +
+    theme_minimal()
+```
+    
+El diagrama de quantiles también indica que el fondo no sigue una distribución normal, ya que los puntos no se alinean con la línea diagonal.
+
+### Ajuste de modelos del fondo sobre la Onda
+```{r}
+g <- df |> ggplot(aes(x = Onda, y = Fondo, color = Medidas)) +
+    geom_point() +
+    labs(title = "Diagrama de dispersión del fondo sobre la longitud de onda", x = "Longitud de onda (nm)", y = "Intensidad") +
+    theme_minimal() +
+    facet_wrap(~ Medidas, scales = "free_y")
+#ggplotly(g)
+g
+```
+
+Se observa que el fondo es el mismo para cualquier número de medidas y que no es aleatorio sino que crece con la longitud de onda.
+
+####  Modelo exponencial
+Ajustamos un modelo exponencial del tipo $y= ae^{bx}$ para el fondo en función de la Onda.
+
+```{r ajuste-modelo-exponencial}
+# Ajuste de modelo exponencial para Fondo ~ Onda
+modelo_exp <- nls(Fondo ~ a * exp(b * Onda), data = df, start = list(a = 1, b = 0.001))
+residuos <- augment(modelo_exp, df)
+
+# Mostramos los coeficientes del modelo
+tidy(modelo_exp) |> kable(caption = "Coeficientes del modelo exponencial para el fondo")
+
+# Calculamos el coeficiente de determinación (R²) para el modelo exponencial
+pred_exp <- predict(modelo_exp, df)
+ss_res <- sum((df$Fondo - pred_exp)^2)
+ss_tot <- sum((df$Fondo - mean(df$Fondo))^2)
+r2_exp <- 1 - ss_res / ss_tot
+
+# Mostramos el coeficiente de determinación
+kable(tibble(`Coeficiente de determinación (R²)` = r2_exp), caption = "Coeficiente de determinación del modelo exponencial para el fondo")
+
+# Dibujar la curva ajustada del modelo exponencial sobre el diagrama de dispersión
+df |> 
+    ggplot(aes(x = Onda, y = Fondo)) +
+    geom_point(alpha = 0.5) +
+    stat_function(fun = function(x) coef(modelo_exp)[["a"]] * exp(coef(modelo_exp)[["b"]] * x), color = color1, size = 1.2) +
+    labs(title = "Ajuste exponencial del fondo", x = "Onda (nm)", y = "Fondo") +
+    theme_minimal()
+
+
+# Diagrama de dispersión de los resíduos
+residuos |> 
+    ggplot(aes(x = Onda, y = .resid)) +
+    geom_point(alpha = 0.5) +
+    labs(title = "Resíduos del modelo exponencial Fondo ~ Onda", x = "Onda (nm)", y = "Resíduo") +
+    theme_minimal()
+
+```
+
+#### Modelo cuadrático
+Ajustamos un modelo cuadrático del tipo $\mbox{Fondo} = a + b \cdot Onda + c \cdot Onda^2$ para el fondo en función de la Onda.
+
+```{r ajuste-modelo-cuadratico}
+# Ajuste de modelo cuadrático para Fondo ~ Onda
+modelo_quad <- nls(Fondo ~ a + b * Onda + c * Onda^2, data = df, start = list(a = 1, b = 1, c = 0.001))
+residuos_quad <- augment(modelo_quad, df)
+
+# Mostramos los coeficientes del modelo cuadrático
+tidy(modelo_quad) |> kable(caption = "Coeficientes del modelo cuadrático para el fondo")
+
+# Calculamos el coeficiente de determinación (R²) para el modelo cuadrático
+pred_quad <- predict(modelo_quad, df)
+ss_res <- sum((df$Fondo - pred_quad)^2)
+ss_tot <- sum((df$Fondo - mean(df$Fondo))^2)
+r2_quad <- 1 - ss_res / ss_tot
+
+# Mostramos el coeficiente de determinación
+kable(tibble(`Coeficiente de determinación (R²)` = r2_quad), caption = "Coeficiente de determinación del modelo cuadrático para el fondo")
+
+# Dibujar la curva ajustada del modelo cuadrático sobre el diagrama de dispersión
+df |> 
+    ggplot(aes(x = Onda, y = Fondo)) +
+    geom_point(alpha = 0.5) +
+    stat_function(
+        fun = function(x) coef(modelo_quad)[["a"]] + coef(modelo_quad)[["b"]] * x + coef(modelo_quad)[["c"]] * x^2,
+        color = color1, size = 1.2
+    ) +
+    labs(title = "Ajuste cuadrático del fondo", x = "Onda (nm)", y = "Fondo") +
+    theme_minimal()
+
+# Diagrama de dispersión de los resíduos del modelo cuadrático
+residuos_quad |> 
+    ggplot(aes(x = Onda, y = .resid)) +
+    geom_point(alpha = 0.5) +
+    labs(title = "Resíduos del modelo cuadrático Fondo ~ Onda", x = "Onda (nm)", y = "Resíduo") +
+    theme_minimal()
+```
+
+Se observa que el modelo cuadrático ajusta mejor el fondo que el modelo exponencial, ya que el coeficiente de determinación $R^2$ es mayor. 
+
+:::{.callout-important}
+Habría que ver si esta dependencia de la intensidad del fondo con la Onda se produce también en la intensidad de la muestra.
+:::
+
+### Análisis de la normalidad del fondo en un rango reducido de longitudes de onda
+
+Vamos a analizar la normalidad del fondo en un rango reducido de longitudes de onda, por ejemplo, entre 250 y 300 nm.
+
+```{r}
+df |> filter(Medidas == 1, Onda >= 250, Onda <= 300) |> 
+    ggplot(aes(x = Fondo)) +
+    geom_histogram(bins = 30, fill = color1, color = "white") +
+    labs(title = "Histograma del fondo para 1 medida", x = "Intensidad", y = "Frecuencia absoluta") +
+    theme_minimal()
+```
+
+La distribución en este rango es más simétrica y presenta forma de campana, lo que sugiere que podría seguir una distribución normal.
+
+```{r test-normalidad-fondo-rango}
+df |> filter(Medidas == 1, Onda >= 250, Onda <= 300) |> 
+    summarise(
+        p_value = ks.test(Fondo, "pnorm", mean(Fondo, na.rm = TRUE), sd(Fondo, na.rm = TRUE))$p.value
+    ) |> 
+kable(caption = "p-valor del test de Kolmogorov-Smirnov para normalidad del fondo (1 medida, rango 250-300 nm)")
+
+df |> filter(Medidas == 1, Onda >= 270, Onda <= 300) |> 
+    summarise(
+        p_value = agostino.test(Fondo)$p.value
+    ) |> 
+kable(caption = "p-valor del test de D'Agostino para normalidad del fondo (1 medida, rango 250-300 nm)")
+```
+
+La distribución del fondo en este rango reducido de longitudes de onda sigue sin ser del todo normal, ya que el p-valor del test de Kolmogorov-Smirnov es menor que 0.05, pero el p-valor del test de D'Agostino es mayor que 0.05, lo que indica que la asimetría y la curtosis se aproximan a los valores de una distribución normal. 
+
+## Análisis de la variabilidad de las medidas
+
+Para analizar la variabilidad de las medidas espectrales, vamos a centrarnos en las longitudes de onda con intensidades significativas.
+
+```{r limite-normalidad-fondo}
+limite_fondo <- df_est_fondo$Media + 3 * df_est_fondo$Desviación
+```
+
+```{r longitudes-significativas}
+df |> filter(Intensidad > limite_fondo) |> 
+    summarise(n = n()) |> 
+    kable(caption = "Número de longitudes de onda con intensidad significativa mayor que la media + 3 veces la desviación típica del fondo.")
+```
+
+Si consideramos como significativas aquellas intensidades mayores de la media del fondo más 3 veces la desviación típica del fondo se obtienen demasiadas longitudes de onda. Por tanto, vamos a considerar como significativas aquellas intensidades mayores que 1000.
+
+```{r longitudes-significativas-1000}
+df_picos <- df |> filter(Intensidad > 1000)
+```
+
+```{r}
+
+#| label: tabla-intensidades-significativas
+#| fig-cap: "Intensidades significativas de los espectros."
+df_picos |> filter(Medidas == 1)  |> 
+    pivot_wider(names_from = Id, values_from = Intensidad) |> 
+    kable(caption = "Intensidades significativas para espectros con 1 medida")
+
+df_picos |> filter(Medidas == 10)  |> 
+    pivot_wider(names_from = Id, values_from = Intensidad) |> 
+    kable(caption = "Intensidades significativas para espectros con 10 medidas")
+
+df_picos |> filter(Medidas == 30)  |> 
+    pivot_wider(names_from = Id, values_from = Intensidad) |> 
+    kable(caption = "Intensidades significativas para espectros con 30 medidas")
+
+df_picos |> filter(Medidas == 50)  |> 
+    pivot_wider(names_from = Id, values_from = Intensidad) |> 
+    kable(caption = "Intensidades significativas para espectros con 50 medidas")
+
+
+df_picos |> filter(Medidas == 100)  |> 
+    pivot_wider(names_from = Id, values_from = Intensidad) |> 
+    kable(caption = "Intensidades significativas para espectros con 100 medidas")
+```
+
+```{r diagrama-cajas-intensidades-significativas}
+df_picos |>
+    mutate(Medidas = as.factor(Medidas), Onda = paste0("Longitud onda ", Onda, " nm")) |>
+    ggplot(aes(x = Medidas, y = Intensidad, fill = Medidas)) +
+    geom_boxplot() +
+    labs(title = "Intensidades significativas por número de medidas", x = "Número de medidas", y = "Intensidad") +
+    facet_wrap(~ Onda, scales = "free_y") +
+    theme_minimal()
+```
+
+```{r diagrama-medias-desviaciones-intensidades-significativas}
+# Calculamos medias y desviaciones para el gráfico
+df_estadisticas <- df_picos |>
+    group_by(Onda, Medidas) |>
+    summarise(
+        Media = mean(Intensidad, na.rm = TRUE),
+        Desviacion = sd(Intensidad, na.rm = TRUE),
+        .groups = "drop"
+    )
+
+# Diagrama de puntos con medias y barras de error con desviaciones típicas
+g <- df_estadisticas |>
+    mutate(Medidas = as.factor(Medidas)) |>
+    ggplot(aes(x = Medidas, y = Media, color = Medidas)) +
+    geom_point(size = 2) +
+    geom_errorbar(
+        aes(ymin = Media - Desviacion, ymax = Media + Desviacion),
+        width = 0.05,
+        size = 1
+    ) +
+    labs(
+        title = "Medias e Intervalos de ±1 Desviación Típica por Onda y Número de Medidas",
+        x = "Número de medidas",
+        y = "Intensidad Media",
+        color = "Medidas"
+    ) +
+    facet_wrap(~ paste0("Onda: ", Onda, " nm"), scales = "free_y") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+#ggplotly(g)
+g
+```
+
+```{r analisis-variabilidad}
+# Función para calcular intervalo de confianza de la desviación típica
+estadisticos <- function(x, conf = 0.95) {
+    n <- length(x)
+    m = mean(x, na.rm = TRUE)
+    s2 <- var(x, na.rm = TRUE)
+    s <- sd(x, na.rm = TRUE)
+    cv <- s / m * 100
+    alpha <- 1 - conf
+    
+    # Límites del intervalo de confianza para la varianza
+    inf <- (n - 1) * s2 / qchisq(1 - alpha/2, df = n - 1)
+    sup <- (n - 1) * s2 / qchisq(alpha/2, df = n - 1)
+    
+    return(tibble(
+        Media = m,
+        Desviación = s,
+        Desv_inf = sqrt(inf),
+        Desv_sup = sqrt(sup),
+        Coef.Variación = cv,
+        CV_inf = sqrt(inf) / m * 100,
+        CV_sup = sqrt(sup) / m * 100
+    ))
+}
+
+# Análisis de variabilidad con intervalos de confianza
+df_variabilidad <- df_picos |>
+    group_by(Onda, Medidas) |>
+    summarise(estadisticos(Intensidad))
+```
+
+**Estadísticos de variabilidad por Onda y número de medidas**
+```{r}
+#| label: tabla-variabilidad
+#| tbl-cap: "Estadísticos de variabilidad por Onda y número de medidas"
+df_variabilidad |>
+    mutate(
+        IC_desv = paste0("[", round(Desv_inf, 2), ", ", round(Desv_sup, 2), "]"),
+        IC_CV = paste0("[", round(CV_inf, 2), ", ", round(CV_sup, 2), "]")
+    ) |>
+    select(Onda, Medidas, Media, Desviación, IC_desv, Coef.Variación, IC_CV) |>
+    reactable(
+        groupBy = "Onda",
+        columns = list(
+            Onda = colDef(name = "Onda (nm)", format = colFormat(digits = 1)),
+            Media = colDef(format = colFormat(digits = 2)),
+            Desviación = colDef(name = "Desviación Típica", format = colFormat(digits = 2)),
+            IC_desv = colDef(name = "IC 95% Desv.Tip."),
+            Coef.Variación = colDef(name = "Coef.Variación(%)", format = colFormat(digits = 2)),
+            IC_CV = colDef(name = "IC 95% Coef.Variación(%)")
+        ),
+        striped = TRUE,
+        highlight = TRUE,
+        compact = TRUE,
+        defaultPageSize = 15
+    )
+```
+
+```{r grafico-ic-desviacion}
+g <- df_variabilidad |>
+    mutate(Medidas = as.factor(Medidas)) |>
+    ggplot(aes(x = Medidas, y = Desviación, color = Medidas)) +
+    geom_point(size = 2) +
+    geom_errorbar(
+        aes(ymin = Desv_inf, ymax = Desv_sup),
+        width = 0.1,
+        size = 1
+    ) +
+    labs(
+        title = "Desviación Típica e Intervalos de Confianza del 95% por Onda y Número de Medidas",
+        x = "Número de medidas",
+        y = "Desviación Típica",
+        color = "Medidas"
+    ) +
+    facet_wrap(~ paste0("Onda: ", Onda, " nm"), scales = "free_y") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+#ggplotly(g)
+g
+```
