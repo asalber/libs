@@ -178,14 +178,14 @@ df |> filter(Medidas == 1) |>
     
 El diagrama de quantiles también indica que el fondo no sigue una distribución normal, ya que los puntos no se alinean con la línea diagonal.
 
-### Ajuste de modelos del fondo sobre la Onda
+### Ajuste de modelos del fondo sobre la longitud de onda
 ```{r}
 g <- df |> ggplot(aes(x = Onda, y = Fondo, color = Medidas)) +
     geom_point() +
     labs(title = "Diagrama de dispersión del fondo sobre la longitud de onda", x = "Longitud de onda (nm)", y = "Intensidad") +
     theme_minimal() +
     facet_wrap(~ Medidas, scales = "free_y")
-#ggplotly(g)
+# ggplotly(g)
 g
 ```
 
@@ -212,12 +212,13 @@ r2_exp <- 1 - ss_res / ss_tot
 kable(tibble(`Coeficiente de determinación (R²)` = r2_exp), caption = "Coeficiente de determinación del modelo exponencial para el fondo")
 
 # Dibujar la curva ajustada del modelo exponencial sobre el diagrama de dispersión
-df |> 
+g <- df |> 
     ggplot(aes(x = Onda, y = Fondo)) +
     geom_point(alpha = 0.5) +
     stat_function(fun = function(x) coef(modelo_exp)[["a"]] * exp(coef(modelo_exp)[["b"]] * x), color = color1, size = 1.2) +
     labs(title = "Ajuste exponencial del fondo", x = "Onda (nm)", y = "Fondo") +
     theme_minimal()
+ggplotly(g)
 
 
 # Diagrama de dispersión de los resíduos
@@ -230,7 +231,7 @@ residuos |>
 ```
 
 #### Modelo cuadrático
-Ajustamos un modelo cuadrático del tipo $\mbox{Fondo} = a + b \cdot Onda + c \cdot Onda^2$ para el fondo en función de la Onda.
+Ajustamos un modelo cuadrático del tipo $y = a + b \cdot x + c \cdot x^2$ para el fondo en función de la Onda.
 
 ```{r ajuste-modelo-cuadratico}
 # Ajuste de modelo cuadrático para Fondo ~ Onda
